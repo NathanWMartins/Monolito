@@ -1,9 +1,9 @@
 import Id from "../../@shared/domain/value-object/id.value-object";
 
 export default class InvoiceItems {
-    private _id: Id;
-    private _name: string;
-    private _price: number;
+    _id: Id;
+    _name: string;
+    _price: number;
 
     constructor(id: Id, name: string, price: number) {
         this._id = id;

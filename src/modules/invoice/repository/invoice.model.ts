@@ -36,10 +36,18 @@ export class InvoiceModel extends Model {
   zipcode: string
 
   @Column({allowNull: false })
-  items: InvoiceItems[]
+  idItems: string
+
+  @Column({allowNull: false })
+  nameItems: string
+
+  @Column({allowNull: false })
+  priceItems: string
 
   @Column({ allowNull: false })
   createdAt: Date
+  @Column({ allowNull: false })
+  total: number;
 
   @Column({ allowNull: false })
   updatedAt: Date

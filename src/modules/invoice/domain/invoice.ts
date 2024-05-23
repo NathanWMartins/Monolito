@@ -14,27 +14,11 @@ type InvoiceProps = {
     updatedAt?: Date;
 }
 
-type InvoicePropsGenerate = {
-  id?: Id;
-  name: string;
-  document: string;
-  street: string;
-  number: string,
-  complement: string,
-  city: string,
-  state: string, 
-  zipCode: string,
-  items: InvoiceItems[];
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
 export default class Invoice extends BaseEntity implements AggregateRoot {
     private _name: string
     private _document: string
     private _address: Address
     private _items: InvoiceItems[]
-    private _total: number
 
     constructor(props: InvoiceProps) {
       super(props.id)
@@ -61,6 +45,6 @@ export default class Invoice extends BaseEntity implements AggregateRoot {
     }
 
     get total(): number{
-      return this._total
+      return this._items.reduce((total_price, item) => total_price + item.price, 0);
     }
   }

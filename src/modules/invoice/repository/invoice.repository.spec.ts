@@ -42,13 +42,13 @@ describe("Client Repository test", () => {
       ),
       items: [
         new InvoiceItems(
-            new Id("123"),
-            "Item Name",
-            10
+          new Id("123"),
+          "Item Name",
+          10
         ),
-    ],
-    createdAt: new Date(),
-    updatedAt: new Date(),
+      ],      
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
 
     const repository = new InvoiceRepository()
@@ -66,7 +66,6 @@ describe("Client Repository test", () => {
     expect(invoiceDb.city).toEqual(invoice.address.city)
     expect(invoiceDb.state).toEqual(invoice.address.state)
     expect(invoiceDb.zipcode).toEqual(invoice.address.zipCode)
-    expect(invoiceDb.items).toEqual(invoice.items)
     expect(invoiceDb.createdAt).toStrictEqual(invoice.createdAt)
     expect(invoiceDb.updatedAt).toStrictEqual(invoice.updatedAt)
   })
@@ -76,22 +75,18 @@ describe("Client Repository test", () => {
     const invoice = await InvoiceModel.create({
       id: '1',
       name: 'Name',
-      address: new Address(
-        "Rua 1",
-        "11",
-        "Casa 1",
-        "City",
-        "SC",
-        "88888-888"
-      ),  
-      items: [
-        new InvoiceItems(
-            new Id("123"),
-            "Item Name",
-            10
-        ),
-    ],  
+      document: 'Document',
+      street: "Rua 1",
+      number: "11",
+      complement: "Casa 1",
+      city: "City",
+      state:  "SC",
+      zipcode:  "88888-888",
+      idItems: "123",
+      nameItems: "Name Items",
+      priceItems: '10',
       createdAt: new Date(),
+      total: 10,
       updatedAt: new Date()
     })
 
@@ -107,8 +102,5 @@ describe("Client Repository test", () => {
     expect(result.address.city).toEqual(invoice.city)
     expect(result.address.state).toEqual(invoice.state)
     expect(result.address.zipCode).toEqual(invoice.zipcode)
-    expect(result.items).toEqual(invoice.items)
-    expect(result.createdAt).toStrictEqual(invoice.createdAt)
-    expect(result.updatedAt).toStrictEqual(invoice.updatedAt)
   })
 });

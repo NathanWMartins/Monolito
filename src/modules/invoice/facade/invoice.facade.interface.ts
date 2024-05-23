@@ -40,6 +40,6 @@ export interface FindInvoiceFacadeOutputDTO {
 }
 
 export default interface InvoiceFacadeUsecase{
-    generate(input: GenerateInvoiceFacadeInputDto): Promise<void>;
-    find(input: FindInvoiceFacadeInputDTO): Promise<FindInvoiceFacadeOutputDTO>
+    generate(invoice: GenerateInvoiceFacadeInputDto): Promise<void>;
+    find(name: string): Promise<FindInvoiceFacadeOutputDTO>
 }
