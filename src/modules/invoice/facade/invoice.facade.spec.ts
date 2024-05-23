@@ -98,8 +98,8 @@ describe("Invoice Facade test", () => {
         })
 
         const facade = InvoiceFacadeFactory.create();
-        const output = await facade.generate(invoice);
-        const found = await facade.find(output.id);
+        await facade.generate(invoice);
+        const found = await facade.find({name: "Name"});
 
 
     });
