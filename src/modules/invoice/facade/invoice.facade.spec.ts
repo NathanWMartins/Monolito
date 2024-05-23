@@ -98,9 +98,25 @@ describe("Invoice Facade test", () => {
         })
 
         const facade = InvoiceFacadeFactory.create();
-        await facade.generate(invoice);
-        const found = await facade.find({name: "Name"});
+        const out = await facade.generate(invoice);
+        const found = await facade.find(out.id);
 
-
+        expect(found).toBeDefined();
+        expect(found.id).toBeDefined();
+        expect(found.name).toBe(invoice.name);
+        expect(found.document).toBe(invoice.document);
+        expect(found.address.street).toBe(invoice.street);
+        expect(found.address.number).toBe(invoice.number);
+        expect(found.address.complement).toBe(invoice.complement);
+        expect(found.address.city).toBe(invoice.city);
+        expect(found.address.state).toBe(invoice.state);
+        expect(found.address.zipCode).toBe(invoice.zipCode);
+        expect(found.items[0].id).toBeDefined;
+        expect(found.items[0].name).toBe(invoice.items[0].name);
+        expect(found.items[0].price).toBe(invoice.items[0].price);
+    
+        expect(found.total).toBe(
+            invoice.items.reduce((total_price, item) => total_price + item.price, 0)
+        );
     });
 });

@@ -14,6 +14,24 @@ export interface GenerateInvoiceFacadeInputDto {
     }[];
 }
 
+export interface GenerateInvoiceFacadeOutputDto {
+    id: string;
+    name: string;
+    document: string;
+    street: string;
+    number: string;
+    complement: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    items: {
+      id: string;
+      name: string;
+      price: number;
+    }[];
+    total: number;
+  }
+
 export interface FindInvoiceFacadeInputDTO {
     id: string;
 }
@@ -40,6 +58,6 @@ export interface FindInvoiceFacadeOutputDTO {
 }
 
 export default interface InvoiceFacadeUsecase{
-    generate(invoice: GenerateInvoiceFacadeInputDto): Promise<void>;
-    find(name: string): Promise<FindInvoiceFacadeOutputDTO>
+    generate(invoice: GenerateInvoiceFacadeInputDto): Promise<GenerateInvoiceFacadeOutputDto>;
+    find(id: string): Promise<FindInvoiceFacadeOutputDTO>
 }
