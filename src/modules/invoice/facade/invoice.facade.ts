@@ -1,5 +1,5 @@
 import UseCaseInterface from "../../@shared/usecase/use-case.interface";
-import InvoiceFacadeUsecase, { FindInvoiceFacadeOutputDTO, GenerateInvoiceFacadeInputDto, GenerateInvoiceFacadeOutputDto } from "./invoice.facade.interface";
+import InvoiceFacadeUsecase, { FindInvoiceFacadeInputDTO, FindInvoiceFacadeOutputDTO, GenerateInvoiceFacadeInputDto, GenerateInvoiceFacadeOutputDto } from "./invoice.facade.interface";
 
 export interface UseCaseProps {
     findUsecase: UseCaseInterface;
@@ -23,5 +23,8 @@ export default class InvoiceFacade implements InvoiceFacadeUsecase {
 
     async find(invoiceId: string): Promise<FindInvoiceFacadeOutputDTO> {
         return await this._findUsecase.execute({ id: invoiceId });
+    }
+    async findApiTest(input: FindInvoiceFacadeInputDTO): Promise<FindInvoiceFacadeOutputDTO> {
+        return null;
     }
 }

@@ -59,5 +59,6 @@ export interface FindInvoiceFacadeOutputDTO {
 
 export default interface InvoiceFacadeUsecase{
     generate(invoice: GenerateInvoiceFacadeInputDto): Promise<GenerateInvoiceFacadeOutputDto>;
-    find(id: string): Promise<FindInvoiceFacadeOutputDTO>
+    find(id: string): Promise<FindInvoiceFacadeOutputDTO>;
+    findApiTest(input: FindInvoiceFacadeInputDTO): Promise<FindInvoiceFacadeOutputDTO>
 }

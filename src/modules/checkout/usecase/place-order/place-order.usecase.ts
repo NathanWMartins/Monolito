@@ -21,8 +21,8 @@ export default class PlaceOrderUsecase implements UseCaseInterface {
     private _paymentFacade: PaymentFacadeInterface;
 
     constructor(
-        clientFacade: ClientAdmFacadeInterface, 
-        productFacade: ProductAdmFacadeInterface, 
+        clientFacade: ClientAdmFacadeInterface,
+        productFacade: ProductAdmFacadeInterface,
         catalogFacade: StoreCatalogFacadeInterface,
         repository: CheckoutGateway,
         invoiceFacade: InvoiceFacadeUsecase,
@@ -41,7 +41,7 @@ export default class PlaceOrderUsecase implements UseCaseInterface {
         if (!client) {
             throw new Error("Client not found");
         }
-        await this.validateProducts(input)
+        await this.validateProducts(input);
 
         const products = await Promise.all(
             input.products.map((p) => this.getProduct(p.productId))
@@ -51,13 +51,13 @@ export default class PlaceOrderUsecase implements UseCaseInterface {
             id: new Id(client.id),
             name: client.name,
             email: client.email,
-            address: client.address.street,
+            address: "x",
         });
 
         const order = new Order({
             client: myClient,
             products,
-        });        
+        });
 
         const payment = await this._paymentFacade.process({
             orderId: order.id.id,
@@ -65,28 +65,28 @@ export default class PlaceOrderUsecase implements UseCaseInterface {
         });
 
         const invoice =
-            payment.status === "approved" 
-            ? await this._invoiceFacade.generate({
-                name: client.name,
-                document: client.document,
-                street: client.address.street,
-                complement: client.address.complement,
-                number:client.address.number,
-                city: client.address.city,
-                state: client.address.state,
-                zipCode: client.address.zipCode,
-                items: products.map((p) => {
-                    return {
-                        id: p.id.id,
-                        name: p.name,
-                        price: Number(p.salesPrice),
-                    }
-                }),
-            }) 
-            : null;
+            payment.status === "approved"
+                ? await this._invoiceFacade.generate({
+                    name: client.name,
+                    document: client.document,
+                    street: undefined,
+                    complement: undefined,
+                    number: undefined,
+                    city: undefined,
+                    state: undefined,
+                    zipCode: undefined,
+                    items: products.map((p) => {
+                        return {
+                            id: p.id.id,
+                            name: p.name,
+                            price: Number(p.salesPrice),
+                        }
+                    }),
+                })
+                : null;
 
-            payment.status === "approved" && order.approved();
-            this._repository.addOrder(order);
+        payment.status === "approved" && order.approved();
+        this._repository.addOrder(order);
 
         return {
             id: order.id.id,
@@ -132,5 +132,5 @@ export default class PlaceOrderUsecase implements UseCaseInterface {
             salesPrice: product.salesPrice.toString(),
         };
         return new Product(productProps);
-    }    
+    }
 }
