@@ -5,10 +5,6 @@ import { ProductModel } from "../../modules/product-adm/repository/product.model
 import app from "../app";
 
 describe("Checkout API", () => {
-    beforeAll(() => {
-        jest.setTimeout(10000);
-    });
-    
     beforeEach(async () => {
         await sequelize.sync({ force: true });
     });
@@ -22,8 +18,7 @@ describe("Checkout API", () => {
             id: "1",
             name: "Product",
             description: "Product description",
-            purchasePrice: 15,
-            salesPrice: 25,
+            purchasePrice: 10,
             stock: 5,
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -39,7 +34,7 @@ describe("Checkout API", () => {
             complement: "Complement 1",
             city: "City 1",
             state: "State 1",
-            zipcode: "00000-000",
+            zipcode: "11111",
             createdAt: new Date(),
             updatedAt: new Date(),
         });
@@ -53,7 +48,7 @@ describe("Checkout API", () => {
                 ],
             });
 
-        expect(response.status).toEqual(200);
+        expect(response.status).toEqual(201);
         expect(response.body.id).toBeDefined();
         expect(response.body.invoiceId).toBeDefined();
         expect(response.body.total).toEqual(45);

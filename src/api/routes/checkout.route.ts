@@ -6,11 +6,10 @@ import PaymentFacadeFactory from "../../modules/payment/factory/payment.facade.f
 import InvoiceFacadeFactory from "../../modules/invoice/factory/invoide.facade.factory";
 import StoreCatalogFacadeFactory from "../../modules/store-catalog/factory/facade.factory";
 import PlaceOrderUsecase from "../../modules/checkout/usecase/place-order/place-order.usecase";
-import { PlaceOrderInputDTO } from "../../modules/checkout/usecase/place-order/place-order.dto";
+import { PlaceOrderInputDTO, PlaceOrderOutputDTO } from "../../modules/checkout/usecase/place-order/place-order.dto";
 import { OrderRepository } from "../../modules/checkout/repository/order.repository";
 
 export const checkoutRoute = express.Router();
-
 const repository = new OrderRepository();
 
 checkoutRoute.post("/", async (req: Request, res: Response) => {
@@ -34,7 +33,10 @@ checkoutRoute.post("/", async (req: Request, res: Response) => {
             clientId: req.body.clientId,
             products: req.body.products,
         };
+        const output: PlaceOrderOutputDTO = await usecase.execute(orderDto);
+        res.status(200).send(output);
     } catch (error) {
+        console.error("Error processing order:", error);
         res.status(500).send(error);
     }
 });
