@@ -6,6 +6,7 @@ const MockRepository = () => {
     return {
         find: jest.fn(),
         generate: jest.fn().mockResolvedValue(undefined),
+        generateAPI: jest.fn(),
     };
 };
 

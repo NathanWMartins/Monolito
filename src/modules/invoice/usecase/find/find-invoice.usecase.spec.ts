@@ -31,6 +31,7 @@ const MockRepository = () => {
     return {
         find: jest.fn().mockResolvedValue(Promise.resolve(invoice)),
         generate: jest.fn(),
+        generateAPI: jest.fn(),
     };
 };
 
